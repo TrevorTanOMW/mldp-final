@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 # Load the trained model
-model = joblib.load("luxuryCar_rf.pkl")
+model = joblib.load("luxuryCar.pkl")
 
 # Updated column list
 columns = [
