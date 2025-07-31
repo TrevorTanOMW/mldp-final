@@ -511,7 +511,10 @@ with st.container():
 
 # Prediction logic
 if st.button("🚀 Predict MSRP"):
-    input_data = {col: 0 for col in columns}
+    # Initialize input data with zeros for all model features
+    input_data = {col: 0 for col in model.feature_names_in_}
+    
+    # Set the basic numerical features
     input_data.update({
         'Year': year,
         'Horsepower': horsepower,
@@ -519,28 +522,44 @@ if st.button("🚀 Predict MSRP"):
         'Number of Doors': num_doors,
         'Highway MPG': highway_mpg,
         'City MPG': city_mpg,
-        'Make_encoded': brand_avg.get(make, sum(brand_avg.values()) / len(brand_avg)),
-        f'Engine Fuel Type_{fuel_type}': 1,
-        f'Transmission Type_{transmission}': 1,
-        f'Driven Wheels_{driven_wheels}': 1,
-        f'Vehicle Size_{vehicle_size}': 1,
-        f'Vehicle Style_{vehicle_style}': 1,
     })
 
-    if luxury:
+    # Step 1: Fix Make encoding
+    make_col = f"Make_{make}"
+    if make_col in model.feature_names_in_:
+        input_data[make_col] = 1
+
+    # Step 2: Fix one-hot encoding for categorical variables
+    for prefix, value in [
+        ('Engine Fuel Type_', fuel_type),
+        ('Transmission Type_', transmission),
+        ('Driven Wheels_', driven_wheels),
+        ('Vehicle Size_', vehicle_size),
+        ('Vehicle Style_', vehicle_style)
+    ]:
+        col_name = f"{prefix}{value}"
+        if col_name in model.feature_names_in_:
+            input_data[col_name] = 1
+
+    # Step 3: Fix performance tag checkboxes
+    if luxury and "Market Category Simplified_luxury" in model.feature_names_in_:
         input_data['Market Category Simplified_luxury'] = 1
-    if performance:
+    if performance and "Market Category Simplified_performance" in model.feature_names_in_:
         input_data['Market Category Simplified_performance'] = 1
-    if green:
+    if green and "Market Category Simplified_green" in model.feature_names_in_:
         input_data['Market Category Simplified_green'] = 1
-    if diesel:
+    if diesel and "Market Category Simplified_diesel" in model.feature_names_in_:
         input_data['Market Category Simplified_diesel'] = 1
-    if crossover:
+    if crossover and "Market Category Simplified_crossover" in model.feature_names_in_:
         input_data['Market Category Simplified_crossover'] = 1
-    if compact:
+    if compact and "Market Category Simplified_compact" in model.feature_names_in_:
         input_data['Market Category Simplified_compact'] = 1
 
     input_df = pd.DataFrame([input_data])
+    
+    # Step 4: Ensure columns are in the exact order the model expects
+    input_df = input_df[model.feature_names_in_]
+    
     prediction = model.predict(input_df)[0]
 
     # Display result in luxury styled card
