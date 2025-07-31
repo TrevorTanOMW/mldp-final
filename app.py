@@ -524,10 +524,14 @@ if st.button("🚀 Predict MSRP"):
         'City MPG': city_mpg,
     })
 
-    # Step 1: Fix Make encoding
-    make_col = f"Make_{make}"
-    if make_col in model.feature_names_in_:
-        input_data[make_col] = 1
+    # Step 1: Use Make_encoded with brand average values
+    if 'Make_encoded' in model.feature_names_in_:
+        input_data['Make_encoded'] = brand_avg.get(make, sum(brand_avg.values()) / len(brand_avg))
+    else:
+        # Fallback to one-hot encoding if Make_encoded doesn't exist
+        make_col = f"Make_{make}"
+        if make_col in model.feature_names_in_:
+            input_data[make_col] = 1
 
     # Step 2: Fix one-hot encoding for categorical variables
     for prefix, value in [
