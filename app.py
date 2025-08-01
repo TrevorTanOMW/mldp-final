@@ -455,62 +455,62 @@ label {
 # Hero Section
 st.markdown("""
 <div class="hero-section">
-    <div class="hero-title">🏎️ Luxury Car Price Predictor 🏎️</div>
+    <div class="hero-title">Luxury Car Price Predictor</div>
     <div class="hero-subtitle">Enter specs. Get accurate predictions. Unleash the value.</div>
 </div>
 """, unsafe_allow_html=True)
 
 # Engine Specifications Section
-st.markdown('<div class="section-header">🔧 Engine Specifications</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-header">Engine Specifications</div>', unsafe_allow_html=True)
 
 with st.container():
     col1, col2, col3 = st.columns([1.2, 1, 1])
     with col1:
-        year = st.number_input("📅 Year", value=2021, min_value=1990, max_value=2026)
-        horsepower = st.number_input("⚡ Horsepower", value=400)
+        year = st.number_input("Year", value=2021, min_value=1990, max_value=2026)
+        horsepower = st.number_input("Horsepower", value=400)
 
     with col2:
-        engine_cylinders = st.number_input("🔩 Engine Cylinders", value=8)
-        fuel_type = st.selectbox("⛽ Engine Fuel Type", fuel_types)
+        engine_cylinders = st.number_input("Engine Cylinders", value=8)
+        fuel_type = st.selectbox("Engine Fuel Type", fuel_types)
 
     with col3:
-        highway_mpg = st.number_input("🛣️ Highway MPG", value=25)
-        city_mpg = st.number_input("🏙️ City MPG", value=18)
+        highway_mpg = st.number_input("Highway MPG", value=25)
+        city_mpg = st.number_input("City MPG", value=18)
 
 # Vehicle Details Section
-st.markdown('<div class="section-header">🚗 Body Style & Configuration</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-header">Body Style & Configuration</div>', unsafe_allow_html=True)
 
 with st.container():
     col1, col2 = st.columns([1.2, 1])
     with col1:
-        make = st.selectbox("🏷️ Make", makes)
-        num_doors = st.selectbox("🚪 Number of Doors", [2, 3, 4])
-        transmission = st.selectbox("⚙️ Transmission Type", transmissions)
+        make = st.selectbox("Make", makes)
+        num_doors = st.selectbox("Number of Doors", [2, 3, 4])
+        transmission = st.selectbox("Transmission Type", transmissions)
 
     with col2:
-        driven_wheels = st.selectbox("🛞 Driven Wheels", drivetrains)
-        vehicle_size = st.selectbox("📏 Vehicle Size", vehicle_sizes)
-        vehicle_style = st.selectbox("🎨 Vehicle Style", vehicle_styles)
+        driven_wheels = st.selectbox("Driven Wheels", drivetrains)
+        vehicle_size = st.selectbox("Vehicle Size", vehicle_sizes)
+        vehicle_style = st.selectbox("Vehicle Style", vehicle_styles)
 
 # Market Categories Section
-st.markdown('<div class="section-header">🏆 Market Categories</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-header">Market Categories</div>', unsafe_allow_html=True)
 
 with st.container():
     col1, col2, col3 = st.columns([1, 1, 1])
     with col1:
-        luxury = st.checkbox("✨ Luxury ", value=True)
-        performance = st.checkbox("🏁 Performance ", value=True)
+        luxury = st.checkbox("Luxury", value=True)
+        performance = st.checkbox("Performance", value=True)
 
     with col2:
-        green = st.checkbox("🌱 Green Vehicle ")
-        diesel = st.checkbox("⛽ Diesel ")
+        green = st.checkbox("Green Vehicle")
+        diesel = st.checkbox("Diesel")
 
     with col3:
-        crossover = st.checkbox("🚙 Crossover ")
-        compact = st.checkbox("🚗 Compact ")
+        crossover = st.checkbox("Crossover")
+        compact = st.checkbox("Compact")
 
 # Prediction logic
-if st.button("🚀 Predict MSRP"):
+if st.button("Predict MSRP"):
     # Initialize input data with zeros for all model features
     input_data = {col: 0 for col in model.feature_names_in_}
     
@@ -569,7 +569,7 @@ if st.button("🚀 Predict MSRP"):
     # Display result in luxury styled card
     st.markdown(f"""
     <div class="result-card">
-        <div class="result-title">💰 Predicted MSRP</div>
+        <div class="result-title">Predicted MSRP</div>
         <div class="result-price">${prediction:,.2f}</div>
         <div class="result-disclaimer">
             This estimate is based on historical prices and car specifications. 
