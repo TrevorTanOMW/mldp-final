@@ -454,57 +454,59 @@ label {
 
 # Hero Section
 st.markdown("""
-<div class="hero-section">
-    <div class="hero-title">Luxury Car Price Predictor</div>
+<div class="hero-section" style="max-width: 1200px; margin: 0 auto;">
+    <div class="hero-title" style="font-size:5rem;">Luxury Car Price Predictor</div>
     <div class="hero-subtitle">Enter specs. Get accurate predictions. Unleash the value.</div>
 </div>
+<div style="height: 3.5rem;"></div>
 """, unsafe_allow_html=True)
 
+# Center all input sections using a centered container and equal columns
+center_style = "max-width: 700px; margin-left: auto; margin-right: auto;"
+
 # Engine Specifications Section
-st.markdown('<div class="section-header">Engine Specifications</div>', unsafe_allow_html=True)
-
+st.markdown(f'<div class="section-header" style="{center_style}">Engine Specifications</div>', unsafe_allow_html=True)
 with st.container():
-    col1, col2, col3 = st.columns([1.2, 1, 1])
+    col1, col2, col3 = st.columns([1, 1, 1], gap="large")
     with col1:
-        year = st.number_input("Year", value=2021, min_value=1990, max_value=2026)
-        horsepower = st.number_input("Horsepower", value=400)
-
+        year = st.slider("Year", min_value=1990, max_value=2026, value=2021, step=1)
+        horsepower = st.slider("Horsepower", min_value=100, max_value=1200, value=400, step=10)
     with col2:
-        engine_cylinders = st.number_input("Engine Cylinders", value=8)
+        engine_cylinders_options = [3, 4, 5, 6, 8, 10, 12, 16]
+        engine_cylinders_idx = engine_cylinders_options.index(8) if 8 in engine_cylinders_options else 0
+        engine_cylinders = st.select_slider(
+            "Engine Cylinders",
+            options=engine_cylinders_options,
+            value=engine_cylinders_options[engine_cylinders_idx]
+        )
         fuel_type = st.selectbox("Engine Fuel Type", fuel_types)
-
     with col3:
-        highway_mpg = st.number_input("Highway MPG", value=25)
-        city_mpg = st.number_input("City MPG", value=18)
+        highway_mpg = st.slider("Highway MPG", min_value=10, max_value=50, value=25, step=1)
+        city_mpg = st.slider("City MPG", min_value=8, max_value=40, value=18, step=1)
 
 # Vehicle Details Section
-st.markdown('<div class="section-header">Body Style & Configuration</div>', unsafe_allow_html=True)
-
+st.markdown(f'<div class="section-header" style="{center_style}">Body Style & Configuration</div>', unsafe_allow_html=True)
 with st.container():
-    col1, col2 = st.columns([1.2, 1])
+    col1, col2 = st.columns([1, 1], gap="large")
     with col1:
         make = st.selectbox("Make", makes)
         num_doors = st.selectbox("Number of Doors", [2, 3, 4])
         transmission = st.selectbox("Transmission Type", transmissions)
-
     with col2:
         driven_wheels = st.selectbox("Driven Wheels", drivetrains)
         vehicle_size = st.selectbox("Vehicle Size", vehicle_sizes)
         vehicle_style = st.selectbox("Vehicle Style", vehicle_styles)
 
 # Market Categories Section
-st.markdown('<div class="section-header">Market Categories</div>', unsafe_allow_html=True)
-
+st.markdown(f'<div class="section-header" style="{center_style}">Market Categories</div>', unsafe_allow_html=True)
 with st.container():
-    col1, col2, col3 = st.columns([1, 1, 1])
+    col1, col2, col3 = st.columns([1, 1, 1], gap="large")
     with col1:
         luxury = st.checkbox("Luxury", value=True)
         performance = st.checkbox("Performance", value=True)
-
     with col2:
         green = st.checkbox("Green Vehicle")
         diesel = st.checkbox("Diesel")
-
     with col3:
         crossover = st.checkbox("Crossover")
         compact = st.checkbox("Compact")
